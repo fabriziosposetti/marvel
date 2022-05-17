@@ -29,11 +29,18 @@ class NetworkApiClient {
                             observer.onNext(result)
                             observer.onCompleted()
                         } else {
-//                            observer.onError(ErrorResult(type: .failure))
+                            observer.onError(ErrorResult(type: .failure))
                         }
                     case .failure:
-                        print("handleFailure")
-                        // handleFailure(observer, response: response)
+                        let errorCode = response.response?.statusCode ?? 500
+                        switch errorCode {
+                        //forbidden
+                        case 401...403:
+                            observer.onError(ErrorResult(type: .forbidden))
+
+                        default:
+                            observer.onError(ErrorResult(type: .failure))
+                        }
                     }
                 })
             return Disposables.create()

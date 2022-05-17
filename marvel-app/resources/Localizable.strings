@@ -1,0 +1,10 @@
+/* 
+  Localizable.strings
+  marvel-app
+
+  Created by Fabrizio Sposetti on 17/05/2022.
+  
+*/
+
+"NAV_BAR_LIST_TITLE" = "Marvel Characters";
+"SERVICE_GENERIC_ERROR" = "An error has occurred, please try again later!";

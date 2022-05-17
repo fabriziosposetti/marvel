@@ -12,6 +12,9 @@
 		6969B76B283413E600084C14 /* CharacterMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6969B76A283413E600084C14 /* CharacterMapper.swift */; };
 		6969B76E283414EB00084C14 /* NetworkApiClientConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6969B76D283414EB00084C14 /* NetworkApiClientConfig.swift */; };
 		6969B7712834173D00084C14 /* String+Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6969B7702834173D00084C14 /* String+Hash.swift */; };
+		6969B77328341FDC00084C14 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6969B77228341FDC00084C14 /* Localizable.strings */; };
+		6969B775283424F300084C14 /* UIViewController+Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6969B774283424F300084C14 /* UIViewController+Toast.swift */; };
+		6969B778283429BA00084C14 /* ErrorResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6969B777283429BA00084C14 /* ErrorResult.swift */; };
 		6984CF2C2832851700ADAD29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6984CF2B2832851700ADAD29 /* AppDelegate.swift */; };
 		6984CF302832851700ADAD29 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6984CF2F2832851700ADAD29 /* ListViewController.swift */; };
 		6984CF332832851700ADAD29 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6984CF312832851700ADAD29 /* Main.storyboard */; };
@@ -55,6 +58,9 @@
 		6969B76A283413E600084C14 /* CharacterMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterMapper.swift; sourceTree = "<group>"; };
 		6969B76D283414EB00084C14 /* NetworkApiClientConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkApiClientConfig.swift; sourceTree = "<group>"; };
 		6969B7702834173D00084C14 /* String+Hash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Hash.swift"; sourceTree = "<group>"; };
+		6969B77228341FDC00084C14 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		6969B774283424F300084C14 /* UIViewController+Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Toast.swift"; sourceTree = "<group>"; };
+		6969B777283429BA00084C14 /* ErrorResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResult.swift; sourceTree = "<group>"; };
 		6984CF282832851700ADAD29 /* marvel-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "marvel-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6984CF2B2832851700ADAD29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6984CF2F2832851700ADAD29 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
@@ -142,8 +148,17 @@
 			isa = PBXGroup;
 			children = (
 				6969B7702834173D00084C14 /* String+Hash.swift */,
+				6969B774283424F300084C14 /* UIViewController+Toast.swift */,
 			);
 			path = extensions;
+			sourceTree = "<group>";
+		};
+		6969B776283429A800084C14 /* error */ = {
+			isa = PBXGroup;
+			children = (
+				6969B777283429BA00084C14 /* ErrorResult.swift */,
+			);
+			path = error;
 			sourceTree = "<group>";
 		};
 		6984CF1F2832851700ADAD29 = {
@@ -310,6 +325,7 @@
 			isa = PBXGroup;
 			children = (
 				6984CF342832851A00ADAD29 /* Assets.xcassets */,
+				6969B77228341FDC00084C14 /* Localizable.strings */,
 			);
 			path = resources;
 			sourceTree = "<group>";
@@ -317,6 +333,7 @@
 		6984CF7C2833470A00ADAD29 /* network */ = {
 			isa = PBXGroup;
 			children = (
+				6969B776283429A800084C14 /* error */,
 				6969B76C283414DF00084C14 /* config */,
 				6984CF7D2833472600ADAD29 /* NetworkApiClient.swift */,
 			);
@@ -431,6 +448,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6969B77328341FDC00084C14 /* Localizable.strings in Resources */,
 				6984CF382832851A00ADAD29 /* LaunchScreen.storyboard in Resources */,
 				6984CF352832851A00ADAD29 /* Assets.xcassets in Resources */,
 				6984CF332832851700ADAD29 /* Main.storyboard in Resources */,
@@ -541,9 +559,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				6984CF6E2832AA5E00ADAD29 /* GetCharactersUseCase.swift in Sources */,
+				6969B775283424F300084C14 /* UIViewController+Toast.swift in Sources */,
 				6984CF7B2833468600ADAD29 /* CharactersRepository.swift in Sources */,
 				6969B76E283414EB00084C14 /* NetworkApiClientConfig.swift in Sources */,
 				6984CF302832851700ADAD29 /* ListViewController.swift in Sources */,
+				6969B778283429BA00084C14 /* ErrorResult.swift in Sources */,
 				6984CF2C2832851700ADAD29 /* AppDelegate.swift in Sources */,
 				6984CF7E2833472600ADAD29 /* NetworkApiClient.swift in Sources */,
 				6984CF5F2832890300ADAD29 /* ListViewModel.swift in Sources */,
