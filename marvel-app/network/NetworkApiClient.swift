@@ -7,21 +7,20 @@
 
 import Alamofire
 import RxSwift
-import CryptoKit
 
 class NetworkApiClient {
 
+    // MARK: Private
     private let manager: Session
 
     required init(manager: Session = Session.default) {
         self.manager = manager
     }
 
-    public func call<TEntity>() -> Observable<TEntity> where TEntity: Codable {
-        let request = createHttpRequest()
+    public func call<TEntity>(config: NetworkApiClientConfig) -> Observable<TEntity> where TEntity: Codable {
+        let request = createHttpRequest(config: config)
 
         return Observable.create({ observer -> Disposable in
-
             self.manager.request(request).validate()
                 .responseData( completionHandler: { [weak self] response in
                     switch response.result {
@@ -37,7 +36,6 @@ class NetworkApiClient {
                         // handleFailure(observer, response: response)
                     }
                 })
-
             return Disposables.create()
         }).share()
     }
@@ -51,31 +49,19 @@ class NetworkApiClient {
         return try? JSONDecoder().decode(TEntity.self, from: data)
     }
 
-    private func createHttpRequest() -> URLRequest {
-//        let dict: KeyDict = self.getKeys()
-        let ts = "thesoer"
-        let hash = md5Hash(string: "\(ts)\("2e8b0747968ca3fb4c2fd43c072de5606bc77f5c")\("6df01e61332aced9ac1cb6ff8fba713e")")
+    private func createHttpRequest(config: NetworkApiClientConfig) -> URLRequest {
+        let urlPathComplete = String(format: "%@%@",
+                                     config.baseUrl,
+                                     config.path)
 
+        var urlComponents = URLComponents(string: urlPathComplete)
 
-        let queryItems = [URLQueryItem(name: "apikey", value: "6df01e61332aced9ac1cb6ff8fba713e"),
-                          URLQueryItem(name: "hash", value: "\(hash)"),
-                          URLQueryItem(name: "ts", value: "\(ts)")]
+        if let queryItems = config.queryItems {
+            urlComponents?.queryItems = queryItems.map { URLQueryItem(name: $0.key, value: $0.value) }
+        }
 
-        var urlComps = URLComponents(string: "http://gateway.marvel.com/v1/public/characters")!
-
-        urlComps.queryItems = queryItems
-
-        let url = (urlComps.url!)
-        let request = URLRequest(url: url)
+        let request = URLRequest(url: (urlComponents?.url)!)
         return request
-    }
-
-    func md5Hash(string: String) -> String {
-        let digest = Insecure.MD5.hash(data: string.data(using: .utf8) ?? Data())
-
-        return digest.map {
-            String(format: "%02hhx", $0)
-        }.joined()
     }
 
 }
