@@ -19,10 +19,13 @@ class ListViewController: UIViewController {
     private var viewModel: ListViewModel!
     private let disposeBag: DisposeBag! = DisposeBag()
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
         initViewModel()
+        loadCharcters()
+    }
+
+    private func loadCharcters() {
         viewModel.getCharacters()
     }
 
@@ -53,6 +56,16 @@ class ListViewController: UIViewController {
             cell.configure(name: item.name, thumbnail: item.thumbnailUrl)
             return cell
         }.disposed(by: disposeBag)
+
+        tableView.rx.willDisplayCell.subscribe(onNext: { [weak self] _, indexPath in
+            guard let self = self else { return }
+            let isLastCell = self.viewModel.isLastCell(row: indexPath.row)
+            let hasNextPage = self.viewModel.hasNextPage()
+            if isLastCell && hasNextPage {
+                self.loadCharcters()
+            }
+        }).disposed(by: disposeBag)
+
     }
 
     private func registerCell() {

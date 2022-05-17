@@ -8,7 +8,7 @@
 import RxSwift
 
 protocol GetCharactersUseCaseProtocol {
-    func execute() -> Observable<CharacterResponse>
+    func execute(limit: Int, offset: Int) -> Observable<CharacterResponse>
 }
 
 class GetCharactersUseCase: GetCharactersUseCaseProtocol {
@@ -19,8 +19,8 @@ class GetCharactersUseCase: GetCharactersUseCaseProtocol {
         self.repository = repository
     }
 
-    func execute() -> Observable<CharacterResponse> {
-        repository.getCharacters()
+    func execute(limit: Int, offset: Int) -> Observable<CharacterResponse> {
+        repository.getCharacters(limit: limit, offset: offset)
     }
 
 }

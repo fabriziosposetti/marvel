@@ -21,7 +21,10 @@ class ListViewModel {
     private var disposeBag = DisposeBag()
     private var onCharactersLoad = PublishSubject<[CharacterModel]>()
     private var onLoading = PublishSubject<Bool>()
-    private var heros: [CharacterModel] = []
+    private var characters: [CharacterModel] = []
+    private var limit: Int = 20
+    private var offset: Int = 0
+    private var totalCharacters: Int = 0
 
     // MARK: - Private: UseCases
     private var getCharactersUseCase: GetCharactersUseCaseProtocol
@@ -33,16 +36,25 @@ class ListViewModel {
     }
 
     func getCharacters() {
-        let useCase = getCharactersUseCase.execute()
+        let useCase = getCharactersUseCase.execute(limit: limit, offset: offset)
         onLoading.onNext(true)
         useCase.subscribe(onNext: { [weak self] response in
-            guard let strongSelf = self else { return }
-            strongSelf.onLoading.onNext(false)
-            let characters = CharacterMapper.map(characterResponse: response)
-            strongSelf.onCharactersLoad.onNext(characters)
-
+            guard let self = self else { return }
+            self.onLoading.onNext(false)
+            let newCharacters = CharacterMapper.map(characterResponse: response)
+            self.characters.append(contentsOf: newCharacters)
+            self.totalCharacters = response.data?.total ?? 0
+            self.offset += response.data?.count ?? 0
+            self.onCharactersLoad.onNext(self.characters)
         }).disposed(by: disposeBag)
+    }
 
+    func isLastCell(row: Int) -> Bool {
+        return (row + 1) == self.characters.count
+    }
+
+    func hasNextPage() -> Bool {
+        return characters.count < totalCharacters
     }
 
 }
