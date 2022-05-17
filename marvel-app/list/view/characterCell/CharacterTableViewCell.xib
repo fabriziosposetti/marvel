@@ -17,13 +17,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Eu-hr-U3B">
-                        <rect key="frame" x="66" y="8" width="246" height="20.5"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gLZ-Qd-iLU">
-                        <rect key="frame" x="66" y="36.5" width="246" height="35.5"/>
+                        <rect key="frame" x="66" y="30" width="246" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -37,21 +31,16 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="5Eu-hr-U3B" secondAttribute="trailing" constant="8" id="2Lr-We-hN8"/>
-                    <constraint firstItem="gLZ-Qd-iLU" firstAttribute="top" secondItem="5Eu-hr-U3B" secondAttribute="bottom" constant="8" id="8dm-yn-uhy"/>
                     <constraint firstItem="5Eu-hr-U3B" firstAttribute="leading" secondItem="hTW-zM-In2" secondAttribute="trailing" constant="8" id="9nA-vC-iXp"/>
-                    <constraint firstItem="5Eu-hr-U3B" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="X7C-qg-4K0"/>
+                    <constraint firstItem="5Eu-hr-U3B" firstAttribute="centerY" secondItem="hTW-zM-In2" secondAttribute="centerY" id="Mj7-dp-2MY"/>
                     <constraint firstAttribute="bottom" secondItem="hTW-zM-In2" secondAttribute="bottom" constant="8" id="arb-lg-cfl"/>
-                    <constraint firstAttribute="trailing" secondItem="gLZ-Qd-iLU" secondAttribute="trailing" constant="8" id="fJ1-pL-REA"/>
                     <constraint firstItem="hTW-zM-In2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="gGs-2R-N2z"/>
-                    <constraint firstItem="gLZ-Qd-iLU" firstAttribute="leading" secondItem="hTW-zM-In2" secondAttribute="trailing" constant="8" id="hBN-yO-ZoO"/>
                     <constraint firstItem="hTW-zM-In2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="hhb-ij-nVr"/>
-                    <constraint firstAttribute="bottom" secondItem="gLZ-Qd-iLU" secondAttribute="bottom" constant="8" id="yii-vp-t86"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="characterImage" destination="hTW-zM-In2" id="1Rw-Wg-Zwk"/>
-                <outlet property="detailLbl" destination="gLZ-Qd-iLU" id="bJ0-S0-nMH"/>
                 <outlet property="titleLbl" destination="5Eu-hr-U3B" id="mIy-PP-nvH"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="156.02678571428569"/>

@@ -50,7 +50,7 @@ class ListViewController: UIViewController {
                                                                  for: IndexPath(index: index)) as? CharacterTableViewCell else {
                 return UITableViewCell()
             }
-            cell.configure(name: item.name, description: item.description)
+            cell.configure(name: item.name, thumbnail: item.thumbnailUrl)
             return cell
         }.disposed(by: disposeBag)
     }

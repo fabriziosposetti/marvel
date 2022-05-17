@@ -46,13 +46,3 @@ class ListViewModel {
     }
 
 }
-
-class CharacterMapper {
-    static func map(characterResponse: CharacterResponse) -> [CharacterModel] {
-        var characters: [CharacterModel] = []
-        characterResponse.data?.results?.forEach({
-            characters.append(CharacterModel(name: $0.name, description: $0.description))
-        })
-        return characters
-    }
-}

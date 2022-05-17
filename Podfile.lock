@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.4.3)
+  - Kingfisher (6.3.0)
   - OHHTTPStubs/Core (9.1.0)
   - OHHTTPStubs/Default (9.1.0):
     - OHHTTPStubs/Core
@@ -22,13 +23,15 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - Kingfisher
   - OHHTTPStubs/Swift
-  - RxCocoa (~> 6.1.0)
-  - RxSwift (~> 6.1.0)
+  - RxCocoa
+  - RxSwift
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - Kingfisher
     - OHHTTPStubs
     - RxCocoa
     - RxRelay
@@ -36,11 +39,12 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
+  Kingfisher: 6c3df386db71d82c0817a429d2c9421a77396529
   OHHTTPStubs: 90eac6d8f2c18317baeca36698523dc67c513831
   RxCocoa: 5c51f02d562cbd94629f6c26cf0c80fe4ab8d343
   RxRelay: 483e1a19fad961b41f0b0c0bee506f46c1ae14fe
   RxSwift: a834e5c538e89eca0cae86f403f4fbf0336786ce
 
-PODFILE CHECKSUM: daaebed03ede865f4d37079dc2326d51e0f9bf41
+PODFILE CHECKSUM: 0466de6b4211e3cff04647ffa34f0d74e860ad02
 
 COCOAPODS: 1.11.2

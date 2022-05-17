@@ -9,5 +9,5 @@ import Foundation
 
 struct CharacterModel {
     let name: String
-    let description: String
+    let thumbnailUrl: String
 }

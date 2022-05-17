@@ -6,8 +6,9 @@ target 'marvel-app' do
   use_frameworks!
 
   pod 'Alamofire'
-  pod 'RxSwift', '~> 6.1.0'
-  pod 'RxCocoa', '~> 6.1.0'
+  pod 'RxSwift'
+  pod 'RxCocoa'
+  pod 'Kingfisher'
 
   target 'marvel-appTests' do
     inherit! :search_paths

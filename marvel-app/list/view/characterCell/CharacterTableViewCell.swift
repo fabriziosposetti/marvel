@@ -6,12 +6,12 @@
 //
 
 import UIKit
+import Kingfisher
 
 class CharacterTableViewCell: UITableViewCell {
     
     // MARK: IBOutlets
     @IBOutlet weak var titleLbl: UILabel!
-    @IBOutlet weak var detailLbl: UILabel!
     @IBOutlet weak var characterImage: UIImageView!
 
     // MARK: Public
@@ -25,9 +25,24 @@ class CharacterTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    func configure(name: String, description: String) {
+    func configure(name: String, thumbnail: String) {
         titleLbl.text = name
-        detailLbl.text = description
+        setImageFrom(thumbnail)
     }
+
+    private func setImageFrom(_ url: String) {
+         let urlResource = URL(string: url)!
+         let processor = DownsamplingImageProcessor(size: self.bounds.size)
+         self.characterImage.kf.indicatorType = .activity
+         self.characterImage.kf.setImage(
+             with: urlResource,
+             placeholder: UIImage(named: "character_placeholder"),
+             options: [
+                 .processor(processor),
+                 .scaleFactor(UIScreen.main.scale),
+                 .transition(.fade(1)),
+                 .cacheOriginalImage
+             ])
+     }
     
 }
