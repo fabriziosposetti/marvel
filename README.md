@@ -7,7 +7,7 @@ of comics and allows you to access the detail of each one by selecting it. It al
 
 
 ## How to Build
-1. The app is using CocoaPods as a dependency manager, so you will need to run at the root directory of your project:
+The app is using CocoaPods as a dependency manager, so you will need to run at the root directory of your project:
 ```sh
 $ pod install
 ```
