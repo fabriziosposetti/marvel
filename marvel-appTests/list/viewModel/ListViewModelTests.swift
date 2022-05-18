@@ -24,6 +24,7 @@ class ListViewModelTests: XCTestCase {
             // then
             XCTAssertFalse(viewModel.hasNextPage())
             XCTAssertTrue(response.first?.name == "name")
+            XCTAssertTrue(viewModel.isLastCell(row: 0))
             expectation.fulfill()
         }).disposed(by: disposeBag)
 
