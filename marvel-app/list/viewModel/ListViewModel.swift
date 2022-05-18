@@ -14,9 +14,9 @@ class ListViewModel {
 
     struct Output {
         let characters: Observable<[CharacterModel]>
-        let loading: Observable<Bool>
+        let midLoading: Observable<Bool>
         let error: Observable<Void>
-        let loadingMoreCharacters: Observable<Bool>
+        let footerLoading: Observable<Bool>
         let successfullyLoaded: Observable<Void>
     }
 
@@ -24,7 +24,7 @@ class ListViewModel {
     private var disposeBag = DisposeBag()
     private var onCharactersLoad = PublishSubject<[CharacterModel]>()
     private var onLoading = PublishSubject<Bool>()
-    private var onLoadingMoreCharacters = PublishSubject<Bool>()
+    private var onFooterLoading = PublishSubject<Bool>()
     private var onSuccessfullLoading =  PublishSubject<Void>()
     private var onError =  PublishSubject<Void>()
     private var characters: [CharacterModel] = []
@@ -43,18 +43,18 @@ class ListViewModel {
     init(getCharactersUseCase: GetCharactersUseCaseProtocol = GetCharactersUseCase()) {
         self.getCharactersUseCase = getCharactersUseCase
         self.output = Output(characters: onCharactersLoad.asObservable(),
-                             loading: onLoading.asObservable(),
+                             midLoading: onLoading.asObservable(),
                              error: onError.asObservable(),
-                             loadingMoreCharacters: onLoadingMoreCharacters.asObservable(),
+                             footerLoading: onFooterLoading.asObservable(),
                              successfullyLoaded: onSuccessfullLoading.asObservable())
     }
 
     func getCharacters(showMidIndicator: Bool) {
         let useCase = getCharactersUseCase.execute(nameStartsWith: nil, limit: limit, offset: offset)
-        showMidIndicator ? onLoading.onNext(true) : onLoadingMoreCharacters.onNext(true)
+        showMidIndicator ? onLoading.onNext(true) : onFooterLoading.onNext(true)
         useCase.subscribe(onNext: { [weak self] response in
             guard let self = self else { return }
-            showMidIndicator ? self.onLoading.onNext(false) : self.onLoadingMoreCharacters.onNext(false)
+            showMidIndicator ? self.onLoading.onNext(false) : self.onFooterLoading.onNext(false)
             self.handleCharactersResponse(response: response, searchResponse: false)
         }, onError: { [weak self] error in
             guard let self = self else { return }

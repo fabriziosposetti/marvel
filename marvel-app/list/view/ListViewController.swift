@@ -97,12 +97,12 @@ class ListViewController: UIViewController {
     }
 
     private func bindLoading() {
-        viewModel.output.loading.bind(onNext: { [weak self] show in
+        viewModel.output.midLoading.bind(onNext: { [weak self] show in
             guard let self = self else { return }
             self.handleMidIndicator(show: show)
         }).disposed(by: disposeBag)
 
-        viewModel.output.loadingMoreCharacters.bind(onNext: { [weak self] show in
+        viewModel.output.footerLoading.bind(onNext: { [weak self] show in
             guard let self = self else { return }
             self.handleFooterIndicator(show: show)
         }).disposed(by: disposeBag)
