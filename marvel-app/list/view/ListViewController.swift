@@ -79,7 +79,7 @@ class ListViewController: UIViewController {
 
         searchBar.rx.text
                     .orEmpty
-                    .throttle(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance)
+                    .debounce(RxTimeInterval.milliseconds(500), scheduler: MainScheduler.instance)
                     .distinctUntilChanged()
                     .bind { [weak self] (query) in
                         if query.isEmpty {
