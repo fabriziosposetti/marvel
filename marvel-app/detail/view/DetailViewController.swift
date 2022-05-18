@@ -25,7 +25,8 @@ class DetailViewController: UIViewController {
     private func setupView() {
         title = "NAV_BAR_DETAIL_TITLE".localized()
         characterTitle.text = detailInputView.character.name
-        characterDescription.text = detailInputView.character.characterDescription
+        characterDescription.text = detailInputView.character.characterDescription.isEmpty ? "DESCRIPTION_NOT_FOUND".localized() :
+        detailInputView.character.characterDescription
         loadImage()
     }
 
