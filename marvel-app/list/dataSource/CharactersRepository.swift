@@ -6,6 +6,11 @@
 //
 import RxSwift
 
+struct KeyDict {
+    let publicKey: String!
+    let privateKey: String!
+}
+
 protocol CharactersRepositoryProtocol {
     func getCharacters(nameStartsWith: String?, limit: Int, offset: Int) -> Observable<CharacterResponse>
 }
@@ -19,15 +24,16 @@ class CharactersRepository: CharactersRepositoryProtocol {
     }
 
     func getCharacters(nameStartsWith: String?, limit: Int, offset: Int) -> Observable<CharacterResponse> {
+        let dict: KeyDict = self.getKeys()
         let config = NetworkApiClientConfig()
         let ts = "thesoer"
-        let publicKey = "6df01e61332aced9ac1cb6ff8fba713e"
-        let privateKey = "2e8b0747968ca3fb4c2fd43c072de5606bc77f5c"
+        let publicKey = dict.publicKey ?? ""
+        let privateKey =  dict.privateKey ?? ""
         let tsAndKeys = "\(ts)\(privateKey)\(publicKey)"
 
         config.path = "/characters"
         config.httpMethod = .get
-        config.addQueryItem(key: "apikey", value: "6df01e61332aced9ac1cb6ff8fba713e")
+        config.addQueryItem(key: "apikey", value: publicKey)
         config.addQueryItem(key: "hash", value: "\(tsAndKeys.md5Hash())")
         config.addQueryItem(key: "ts", value: "\(ts)")
         config.addQueryItem(key: "limit", value: "\(limit)")
@@ -38,6 +44,19 @@ class CharactersRepository: CharactersRepositoryProtocol {
         }
 
         return apiManager.call(config: config)
+    }
+
+    func getKeys() -> KeyDict {
+        var keys: NSDictionary?
+        if let path = Bundle.main.path(forResource: "ApiKeys", ofType: "plist") {
+            keys = NSDictionary(contentsOfFile: path)!
+        }
+
+        if let data = keys {
+            return KeyDict(publicKey: (data["publicKey"] as! String), privateKey: (data["privateKey"] as! String))
+        } else {
+            return KeyDict(publicKey: "", privateKey: "")
+        }
     }
 
 }
