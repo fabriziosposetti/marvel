@@ -78,6 +78,7 @@ class ListViewController: UIViewController {
 
     private func bindSearchBar() {
         searchBar.rx.cancelButtonClicked.bind(onNext: { [weak self] in
+            self?.searchBar.text = ""
             self?.searchBar.isHidden = true
             self?.showInitialResults()
         }).disposed(by: disposeBag)

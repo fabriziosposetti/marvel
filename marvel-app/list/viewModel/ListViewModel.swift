@@ -97,33 +97,43 @@ class ListViewModel {
         }
     }
 
-    private func handleCharactersResponse(response: CharacterResponse, searchResponse: Bool) {
-        let newCharacters = CharacterMapper.map(characterResponse: response)
-        if searchResponse {
-            if loadingMoreSearchResults {
-                charactersSearched.append(contentsOf: newCharacters)
-                loadingMoreSearchResults = false
-            } else {
-                charactersSearched = newCharacters
-            }
-            offset += response.data.count
-            totalCharactersSearched = response.data.total
-            onCharactersLoad.onNext(charactersSearched)
-        } else {
-            characters.append(contentsOf: newCharacters)
-            totalCharacters = response.data.total
-            offset += response.data.count
-            onCharactersLoad.onNext(characters)
-        }
-        onSuccessfullLoading.onNext(())
-    }
-
     func isLastCell(row: Int) -> Bool {
         return isSearching ? row + 1 == charactersSearched.count  : row + 1 == characters.count
     }
 
     func hasNextPage() -> Bool {
         return isSearching ? charactersSearched.count < totalCharactersSearched : characters.count < totalCharacters
+    }
+
+    private func handleCharactersResponse(response: CharacterResponse, searchResponse: Bool) {
+        if searchResponse {
+            handleSearchResponse(response: response)
+        } else {
+            handleNormalResponse(response: response)
+        }
+    }
+
+    private func handleSearchResponse(response: CharacterResponse) {
+        let newCharacters = CharacterMapper.map(characterResponse: response)
+        if loadingMoreSearchResults {
+            charactersSearched.append(contentsOf: newCharacters)
+            loadingMoreSearchResults = false
+        } else {
+            charactersSearched = newCharacters
+        }
+        offset += response.data.count
+        totalCharactersSearched = response.data.total
+        onCharactersLoad.onNext(charactersSearched)
+        onSuccessfullLoading.onNext(())
+    }
+
+    private func handleNormalResponse(response: CharacterResponse) {
+        let newCharacters = CharacterMapper.map(characterResponse: response)
+        characters.append(contentsOf: newCharacters)
+        totalCharacters = response.data.total
+        offset += response.data.count
+        onCharactersLoad.onNext(characters)
+        onSuccessfullLoading.onNext(())
     }
 
 }
