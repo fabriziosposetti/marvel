@@ -23,6 +23,8 @@ class ListViewController: UIViewController {
     private var viewModel: ListViewModel!
     private let disposeBag: DisposeBag! = DisposeBag()
     private var router: Router!
+    private var isSearching = false
+    private var loadingMoreData: Bool!
 
     enum Route: String {
         case characterDetail
@@ -64,10 +66,13 @@ class ListViewController: UIViewController {
     }
 
     private func search(_ query: String?) {
+        viewModel.initSearchMode(query: query)
+        isSearching = true
         viewModel.search(query: query)
     }
 
     private func showInitialResults() {
+        isSearching = false
         viewModel.showInitialResults()
     }
 
@@ -105,6 +110,7 @@ class ListViewController: UIViewController {
     private func bindTableView() {
         viewModel.output.successfullyLoaded.bind(onNext: { [weak self] in
             guard let self = self else { return }
+            self.loadingMoreData = false
             self.showResults()
         }).disposed(by: disposeBag)
 
@@ -123,8 +129,9 @@ class ListViewController: UIViewController {
             guard let self = self else { return }
             let isLastCell = self.viewModel.isLastCell(row: indexPath.row)
             let hasNextPage = self.viewModel.hasNextPage()
-            if isLastCell && hasNextPage {
-                self.loadCharcters(showMidIndicator: false)
+            if isLastCell && hasNextPage && !self.loadingMoreData {
+                self.loadingMoreData = true
+                self.isSearching ? self.viewModel.continueSearching() : self.loadCharcters(showMidIndicator: false)
             }
         }).disposed(by: disposeBag)
 

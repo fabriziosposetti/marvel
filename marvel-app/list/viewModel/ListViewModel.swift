@@ -29,9 +29,12 @@ class ListViewModel {
     private var onError =  PublishSubject<Void>()
     private var characters: [CharacterModel] = []
     private var charactersSearched: [CharacterModel] = []
-    private var limit: Int = 20
+    private var limit: Int = 30
     private var offset: Int = 0
     private var totalCharacters: Int = 0
+    private var totalCharactersSearched: Int = 0
+    private var isSearching = false
+    private var nameStartWith: String?
 
     // MARK: - Private: UseCases
     private var getCharactersUseCase: GetCharactersUseCaseProtocol
@@ -59,6 +62,12 @@ class ListViewModel {
         }).disposed(by: disposeBag)
     }
 
+    func initSearchMode(query: String?) {
+        nameStartWith = query
+        isSearching = true
+        offset = 0
+    }
+
     func search(query: String?) {
         let useCase = getCharactersUseCase.execute(nameStartsWith: query, limit: limit, offset: offset)
         onLoading.onNext(true)
@@ -72,7 +81,12 @@ class ListViewModel {
         }).disposed(by: disposeBag)
     }
 
+    func continueSearching() {
+        search(query: nameStartWith)
+    }
+
     func showInitialResults() {
+        isSearching = false
         if !(characters.isEmpty) {
             onCharactersLoad.onNext(characters)
         }
@@ -81,8 +95,9 @@ class ListViewModel {
     private func handleCharactersResponse(response: CharacterResponse, searchResponse: Bool) {
         let newCharacters = CharacterMapper.map(characterResponse: response)
         if searchResponse {
-            charactersSearched = newCharacters
-            offset = 0
+            charactersSearched.append(contentsOf: newCharacters)
+            offset += response.data.count
+            totalCharactersSearched = response.data.total
             onCharactersLoad.onNext(charactersSearched)
         } else {
             characters.append(contentsOf: newCharacters)
@@ -94,11 +109,11 @@ class ListViewModel {
     }
 
     func isLastCell(row: Int) -> Bool {
-        return (row + 1) == self.characters.count
+        return isSearching ? row + 1 == charactersSearched.count  : row + 1 == characters.count
     }
 
     func hasNextPage() -> Bool {
-        return characters.count < totalCharacters
+        return isSearching ? charactersSearched.count < totalCharactersSearched : characters.count < totalCharacters
     }
 
 }
