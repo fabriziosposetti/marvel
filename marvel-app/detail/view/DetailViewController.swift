@@ -13,13 +13,22 @@ class DetailViewController: UIViewController {
     // MARK: Public
     var detailInputView: DetailInputView!
 
+    // MARK: IBOutlets
     @IBOutlet weak var characterTitle: UILabel!
     @IBOutlet weak var characterImage: UIImageView!
     @IBOutlet weak var characterDescription: UILabel!
 
+    // MARK: Private
+    private var viewModel: DetailViewModel!
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        initViewModel()
         setupView()
+    }
+
+    private func initViewModel() {
+        viewModel = DetailViewModel()
     }
 
     private func setupView() {

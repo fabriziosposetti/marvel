@@ -263,7 +263,6 @@
 			children = (
 				6984CF6428328C3500ADAD29 /* view */,
 				6984CF6528328C4100ADAD29 /* viewModel */,
-				6984CF6628328C4C00ADAD29 /* useCases */,
 			);
 			path = detail;
 			sourceTree = "<group>";
@@ -283,13 +282,6 @@
 				6984CF6B28328CF700ADAD29 /* DetailViewModel.swift */,
 			);
 			path = viewModel;
-			sourceTree = "<group>";
-		};
-		6984CF6628328C4C00ADAD29 /* useCases */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = useCases;
 			sourceTree = "<group>";
 		};
 		6984CF6728328C7E00ADAD29 /* dataSource */ = {
