@@ -48,11 +48,6 @@ class NetworkApiClient {
     }
 
     private func decode<TEntity>(data: Data) -> TEntity? where TEntity: Codable {
-        do {
-           return try JSONDecoder().decode(TEntity.self, from: data)
-        } catch let error {
-            print(error)
-        }
         return try? JSONDecoder().decode(TEntity.self, from: data)
     }
 

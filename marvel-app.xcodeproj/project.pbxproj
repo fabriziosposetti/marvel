@@ -34,6 +34,7 @@
 		6984CF7B2833468600ADAD29 /* CharactersRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6984CF7A2833468600ADAD29 /* CharactersRepository.swift */; };
 		6984CF7E2833472600ADAD29 /* NetworkApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6984CF7D2833472600ADAD29 /* NetworkApiClient.swift */; };
 		69CCC8D5283522A500665BB0 /* ListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CCC8D4283522A500665BB0 /* ListViewModelTests.swift */; };
+		69CCC8D72835373300665BB0 /* CharactersRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CCC8D62835373300665BB0 /* CharactersRepositoryTests.swift */; };
 		69ED1BEE28349AE4002FB60E /* ListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69ED1BED28349AE4002FB60E /* ListRouter.swift */; };
 		69ED1BF128349B72002FB60E /* DetailInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69ED1BF028349B72002FB60E /* DetailInputView.swift */; };
 /* End PBXBuildFile section */
@@ -87,6 +88,7 @@
 		6984CF7A2833468600ADAD29 /* CharactersRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersRepository.swift; sourceTree = "<group>"; };
 		6984CF7D2833472600ADAD29 /* NetworkApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkApiClient.swift; sourceTree = "<group>"; };
 		69CCC8D4283522A500665BB0 /* ListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModelTests.swift; sourceTree = "<group>"; };
+		69CCC8D62835373300665BB0 /* CharactersRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersRepositoryTests.swift; sourceTree = "<group>"; };
 		69ED1BED28349AE4002FB60E /* ListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRouter.swift; sourceTree = "<group>"; };
 		69ED1BF028349B72002FB60E /* DetailInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailInputView.swift; sourceTree = "<group>"; };
 		9321B98750291DC9B1E9DDC2 /* Pods_marvel_app.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_marvel_app.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -369,6 +371,7 @@
 		69CCC8D32835227600665BB0 /* dataSource */ = {
 			isa = PBXGroup;
 			children = (
+				69CCC8D62835373300665BB0 /* CharactersRepositoryTests.swift */,
 			);
 			path = dataSource;
 			sourceTree = "<group>";
@@ -632,6 +635,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69CCC8D72835373300665BB0 /* CharactersRepositoryTests.swift in Sources */,
 				69CCC8D5283522A500665BB0 /* ListViewModelTests.swift in Sources */,
 				6984CF432832851B00ADAD29 /* GetCharactersUseCaseTests.swift in Sources */,
 			);
