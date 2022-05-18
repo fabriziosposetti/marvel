@@ -16,6 +16,8 @@ class ListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tryAgainBtn: UIButton!
     @IBOutlet weak var footerActiviyIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var searchBtn: UIBarButtonItem!
+    @IBOutlet weak var searchBar: UISearchBar!
 
     // MARK: Private
     private var viewModel: ListViewModel!
@@ -23,7 +25,7 @@ class ListViewController: UIViewController {
     private var router: Router!
 
     enum Route: String {
-       case characterDetail
+        case characterDetail
     }
 
     override func viewDidLoad() {
@@ -45,6 +47,7 @@ class ListViewController: UIViewController {
 
     private func setupView() {
         title = "NAV_BAR_LIST_TITLE".localized()
+        searchBar.showsCancelButton = true
         footerActiviyIndicator.isHidden = true
     }
 
@@ -57,6 +60,13 @@ class ListViewController: UIViewController {
         bindTableView()
         bindLoading()
         bindError()
+        bindSearchBar()
+    }
+
+    private func bindSearchBar() {
+        searchBar.rx.cancelButtonClicked.bind(onNext: { [weak self] in
+            self?.searchBar.isHidden = true
+        }).disposed(by: disposeBag)
     }
 
     private func bindLoading() {
@@ -81,7 +91,7 @@ class ListViewController: UIViewController {
             guard let self = self else { return UITableViewCell() }
             let identifier = CharacterTableViewCell.identifier
             guard let cell = self.tableView.dequeueReusableCell(withIdentifier: identifier,
-                                                                 for: IndexPath(index: index)) as? CharacterTableViewCell else {
+                                                                for: IndexPath(index: index)) as? CharacterTableViewCell else {
                 return UITableViewCell()
             }
             cell.configure(name: item.name, thumbnail: item.getLandscapeLargeUrlImage())
@@ -155,5 +165,9 @@ class ListViewController: UIViewController {
         loadCharcters(showMidIndicator: true)
     }
 
+    @IBAction func searchTapped(_ sender: Any) {
+        searchBar.isHidden = false
+    }
+    
 }
 

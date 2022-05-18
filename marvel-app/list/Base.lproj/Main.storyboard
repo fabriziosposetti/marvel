@@ -19,6 +19,10 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="EMk-i4-Z3X">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <subviews>
+                                    <searchBar hidden="YES" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="SB0-cI-VUJ">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </searchBar>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="o8m-qd-2H4">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="744"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -62,10 +66,17 @@
                     </view>
                     <navigationItem key="navigationItem" title=" " id="Kke-F6-ddb">
                         <barButtonItem key="backBarButtonItem" title=" " id="irw-pL-7r9"/>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="magnifyingglass" catalog="system" id="NvU-nn-Dlm">
+                            <connections>
+                                <action selector="searchTapped:" destination="BYZ-38-t0r" id="T9F-9V-MrC"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="30i-i1-8DW" id="d31-yu-0yR"/>
                         <outlet property="footerActiviyIndicator" destination="gbK-jW-KVy" id="5oy-w5-aAN"/>
+                        <outlet property="searchBar" destination="SB0-cI-VUJ" id="s3R-qM-9yk"/>
+                        <outlet property="searchBtn" destination="NvU-nn-Dlm" id="ZFz-YR-NLC"/>
                         <outlet property="tableView" destination="o8m-qd-2H4" id="GaP-qb-TF9"/>
                         <outlet property="tryAgainBtn" destination="kc0-SM-EDA" id="xR3-u6-069"/>
                     </connections>
@@ -146,6 +157,7 @@
     </scenes>
     <color key="tintColor" systemColor="labelColor"/>
     <resources>
+        <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

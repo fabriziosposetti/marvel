@@ -45,7 +45,7 @@ class ListViewModel {
     }
 
     func getCharacters(showMidIndicator: Bool) {
-        let useCase = getCharactersUseCase.execute(limit: limit, offset: offset)
+        let useCase = getCharactersUseCase.execute(nameStartsWith: nil, limit: limit, offset: offset)
         showMidIndicator ? onLoading.onNext(true) : onLoadingMoreCharacters.onNext(true)
 
         useCase.subscribe(onNext: { [weak self] response in

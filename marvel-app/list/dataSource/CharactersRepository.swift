@@ -7,7 +7,7 @@
 import RxSwift
 
 protocol CharactersRepositoryProtocol {
-    func getCharacters(limit: Int, offset: Int) -> Observable<CharacterResponse>
+    func getCharacters(nameStartsWith: String?, limit: Int, offset: Int) -> Observable<CharacterResponse>
 }
 
 class CharactersRepository: CharactersRepositoryProtocol {
@@ -18,7 +18,7 @@ class CharactersRepository: CharactersRepositoryProtocol {
         self.apiManager = apiManager
     }
 
-    func getCharacters(limit: Int, offset: Int) -> Observable<CharacterResponse> {
+    func getCharacters(nameStartsWith: String?, limit: Int, offset: Int) -> Observable<CharacterResponse> {
         let config = NetworkApiClientConfig()
         let ts = "thesoer"
         let publicKey = "6df01e61332aced9ac1cb6ff8fba713e"
@@ -32,6 +32,10 @@ class CharactersRepository: CharactersRepositoryProtocol {
         config.addQueryItem(key: "ts", value: "\(ts)")
         config.addQueryItem(key: "limit", value: "\(limit)")
         config.addQueryItem(key: "offset", value: "\(offset)")
+
+        if let nameStartsWith = nameStartsWith {
+            config.addQueryItem(key: "nameStartsWith", value: nameStartsWith)
+        }
 
         return apiManager.call(config: config)
     }
