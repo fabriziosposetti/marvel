@@ -1,4 +1,4 @@
-# iOS- Marvel API
+# iOS- Marvel Application
 
 ## Description
 
