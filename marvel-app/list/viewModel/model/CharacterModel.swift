@@ -9,5 +9,18 @@ import Foundation
 
 struct CharacterModel {
     let name: String
-    let thumbnailUrl: String
+    let characterDescription: String
+    let imagePath: String
+    let imageExtension: String
+
+    func getStandarLargeUrlImage() -> String {
+        let url = ("\(imagePath)/standard_large.\(imageExtension)")
+        return url
+    }
+    
+    func getLandscapeLargeUrlImage() -> String {
+        let url = ("\(imagePath)/landscape_large.\(imageExtension)")
+        return url
+    }
+
 }

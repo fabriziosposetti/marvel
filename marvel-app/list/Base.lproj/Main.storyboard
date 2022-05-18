@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--List View Controller-->
+        <!-- -->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ListViewController" customModule="marvel_app" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title=" " id="BYZ-38-t0r" customClass="ListViewController" customModule="marvel_app" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -60,7 +60,9 @@
                             <constraint firstItem="30i-i1-8DW" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wuv-zo-aeB"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Kke-F6-ddb"/>
+                    <navigationItem key="navigationItem" title=" " id="Kke-F6-ddb">
+                        <barButtonItem key="backBarButtonItem" title=" " id="irw-pL-7r9"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="activityIndicator" destination="30i-i1-8DW" id="d31-yu-0yR"/>
                         <outlet property="footerActiviyIndicator" destination="gbK-jW-KVy" id="5oy-w5-aAN"/>
@@ -72,16 +74,52 @@
             </objects>
             <point key="canvasLocation" x="1047.8260869565217" y="89.732142857142847"/>
         </scene>
-        <!--Detail View Controller-->
+        <!-- -->
         <scene sceneID="sfQ-AI-fbc">
             <objects>
-                <viewController id="f4A-2V-yDF" customClass="DetailViewController" customModule="marvel_app" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailViewController" title=" " id="f4A-2V-yDF" customClass="DetailViewController" customModule="marvel_app" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Sk3-EE-FQv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AOk-1V-yzl">
+                                <rect key="frame" x="0.0" y="44" width="414" height="250"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="250" id="QD4-Cu-gfV"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x8F-PQ-80e">
+                                <rect key="frame" x="16" y="310" width="382" height="25.5"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UOl-4Q-AIT">
+                                <rect key="frame" x="16" y="351.5" width="382" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="Cfj-Pu-e5B"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="UOl-4Q-AIT" firstAttribute="leading" secondItem="Cfj-Pu-e5B" secondAttribute="leading" constant="16" id="1YD-EK-gi3"/>
+                            <constraint firstItem="Cfj-Pu-e5B" firstAttribute="trailing" secondItem="UOl-4Q-AIT" secondAttribute="trailing" constant="16" id="49f-JB-FhQ"/>
+                            <constraint firstItem="Cfj-Pu-e5B" firstAttribute="trailing" secondItem="x8F-PQ-80e" secondAttribute="trailing" constant="16" id="W4E-Y1-lSI"/>
+                            <constraint firstItem="x8F-PQ-80e" firstAttribute="top" secondItem="AOk-1V-yzl" secondAttribute="bottom" constant="16" id="eOk-7V-qlD"/>
+                            <constraint firstItem="AOk-1V-yzl" firstAttribute="leading" secondItem="Cfj-Pu-e5B" secondAttribute="leading" id="pDR-EG-iKl"/>
+                            <constraint firstItem="x8F-PQ-80e" firstAttribute="leading" secondItem="Cfj-Pu-e5B" secondAttribute="leading" constant="16" id="pgd-Gs-apj"/>
+                            <constraint firstItem="Cfj-Pu-e5B" firstAttribute="trailing" secondItem="AOk-1V-yzl" secondAttribute="trailing" id="rhE-8a-yxn"/>
+                            <constraint firstItem="AOk-1V-yzl" firstAttribute="top" secondItem="Cfj-Pu-e5B" secondAttribute="top" id="tx5-ho-QKD"/>
+                            <constraint firstItem="UOl-4Q-AIT" firstAttribute="top" secondItem="x8F-PQ-80e" secondAttribute="bottom" constant="16" id="uGr-eL-HG3"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="characterDescription" destination="UOl-4Q-AIT" id="sIV-MZ-oDJ"/>
+                        <outlet property="characterImage" destination="AOk-1V-yzl" id="yoU-03-RXh"/>
+                        <outlet property="characterTitle" destination="x8F-PQ-80e" id="ePc-rN-oeH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nja-fq-SQH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

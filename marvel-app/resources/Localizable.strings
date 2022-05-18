@@ -7,4 +7,5 @@
 */
 
 "NAV_BAR_LIST_TITLE" = "Marvel Characters";
+"NAV_BAR_DETAIL_TITLE" = "Character detail";
 "SERVICE_GENERIC_ERROR" = "An error has occurred, please try again later!";

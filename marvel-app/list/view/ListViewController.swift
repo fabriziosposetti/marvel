@@ -20,10 +20,16 @@ class ListViewController: UIViewController {
     // MARK: Private
     private var viewModel: ListViewModel!
     private let disposeBag: DisposeBag! = DisposeBag()
+    private var router: Router!
+
+    enum Route: String {
+       case characterDetail
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         initViewModel()
+        initRouter()
         setupView()
         loadCharcters(showMidIndicator: true)
     }
@@ -31,6 +37,10 @@ class ListViewController: UIViewController {
     private func initViewModel() {
         viewModel = ListViewModel()
         bindViewModel()
+    }
+
+    private func initRouter() {
+        router = ListRouter()
     }
 
     private func setupView() {
@@ -74,7 +84,7 @@ class ListViewController: UIViewController {
                                                                  for: IndexPath(index: index)) as? CharacterTableViewCell else {
                 return UITableViewCell()
             }
-            cell.configure(name: item.name, thumbnail: item.thumbnailUrl)
+            cell.configure(name: item.name, thumbnail: item.getLandscapeLargeUrlImage())
             return cell
         }.disposed(by: disposeBag)
 
@@ -83,11 +93,17 @@ class ListViewController: UIViewController {
             let isLastCell = self.viewModel.isLastCell(row: indexPath.row)
             let hasNextPage = self.viewModel.hasNextPage()
             if isLastCell && hasNextPage {
-//                self.footerActiviyIndicator.isHidden = false
-//                self.footerActiviyIndicator.startAnimating()
                 self.loadCharcters(showMidIndicator: false)
             }
         }).disposed(by: disposeBag)
+
+        tableView.rx
+            .modelSelected(CharacterModel.self)
+            .subscribe(onNext: { [weak self] item in
+                guard let self = self else { return }
+                let detailInputView = DetailInputView(character: item)
+                self.router.route(to: Route.characterDetail.rawValue, from: self, parameters: detailInputView)
+            }).disposed(by: disposeBag)
     }
 
     private func showResults() {
