@@ -28,6 +28,7 @@ class ListViewModel {
     private var onSuccessfullLoading =  PublishSubject<Void>()
     private var onError =  PublishSubject<Void>()
     private var characters: [CharacterModel] = []
+    private var charactersSearched: [CharacterModel] = []
     private var limit: Int = 20
     private var offset: Int = 0
     private var totalCharacters: Int = 0
@@ -51,19 +52,44 @@ class ListViewModel {
         useCase.subscribe(onNext: { [weak self] response in
             guard let self = self else { return }
             showMidIndicator ? self.onLoading.onNext(false) : self.onLoadingMoreCharacters.onNext(false)
-            self.handleCharactersResponse(response: response)
+            self.handleCharactersResponse(response: response, searchResponse: false)
         }, onError: { [weak self] error in
             guard let self = self else { return }
             self.onError.onNext(())
         }).disposed(by: disposeBag)
     }
 
-    private func handleCharactersResponse(response: CharacterResponse) {
+    func search(query: String?) {
+        let useCase = getCharactersUseCase.execute(nameStartsWith: query, limit: limit, offset: offset)
+        onLoading.onNext(true)
+        useCase.subscribe(onNext: { [weak self] response in
+            guard let self = self else { return }
+            self.onLoading.onNext(false)
+            self.handleCharactersResponse(response: response, searchResponse: true)
+        }, onError: { [weak self] error in
+            guard let self = self else { return }
+            self.onError.onNext(())
+        }).disposed(by: disposeBag)
+    }
+
+    func showInitialResults() {
+        if !(characters.isEmpty) {
+            onCharactersLoad.onNext(characters)
+        }
+    }
+
+    private func handleCharactersResponse(response: CharacterResponse, searchResponse: Bool) {
         let newCharacters = CharacterMapper.map(characterResponse: response)
-        characters.append(contentsOf: newCharacters)
-        totalCharacters = response.data.total
-        offset += response.data.count
-        onCharactersLoad.onNext(self.characters)
+        if searchResponse {
+            charactersSearched = newCharacters
+            offset = 0
+            onCharactersLoad.onNext(charactersSearched)
+        } else {
+            characters.append(contentsOf: newCharacters)
+            totalCharacters = response.data.total
+            offset += response.data.count
+            onCharactersLoad.onNext(characters)
+        }
         onSuccessfullLoading.onNext(())
     }
 

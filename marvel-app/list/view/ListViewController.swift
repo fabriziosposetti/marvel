@@ -63,10 +63,31 @@ class ListViewController: UIViewController {
         bindSearchBar()
     }
 
+    private func search(_ query: String?) {
+        viewModel.search(query: query)
+    }
+
+    private func showInitialResults() {
+        viewModel.showInitialResults()
+    }
+
     private func bindSearchBar() {
         searchBar.rx.cancelButtonClicked.bind(onNext: { [weak self] in
             self?.searchBar.isHidden = true
+            self?.showInitialResults()
         }).disposed(by: disposeBag)
+
+        searchBar.rx.text
+                    .orEmpty
+                    .throttle(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance)
+                    .distinctUntilChanged()
+                    .bind { [weak self] (query) in
+                        if query.isEmpty {
+                            self?.showInitialResults()
+                        } else {
+                            self?.search(query)
+                        }
+                    }.disposed(by: disposeBag)
     }
 
     private func bindLoading() {
@@ -168,6 +189,6 @@ class ListViewController: UIViewController {
     @IBAction func searchTapped(_ sender: Any) {
         searchBar.isHidden = false
     }
-    
+
 }
 
