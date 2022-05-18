@@ -26,7 +26,7 @@ class CharactersRepositoryTests: BaseRepositoryRemoteTest {
         let repository: CharactersRepository = CharactersRepository(apiManager: apiManager)
 
         //When
-        let call = repository.getCharacters(limit: 20, offset: 20)
+        let call = repository.getCharacters(nameStartsWith: nil, limit: 20, offset: 20)
 
         ServiceTestMock.createStub(data: response)
         let expectation = self.expectation(description: "OK")
@@ -49,7 +49,7 @@ class CharactersRepositoryTests: BaseRepositoryRemoteTest {
         let repository: CharactersRepository = CharactersRepository(apiManager: apiManager)
 
         //When
-        let call = repository.getCharacters(limit: 20, offset: 20)
+        let call = repository.getCharacters(nameStartsWith: nil, limit: 20, offset: 20)
         ServiceTestMock.createStub(data: response, statusCode: 500)
         let expectation = self.expectation(description: "OK")
 

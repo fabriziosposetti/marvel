@@ -66,13 +66,13 @@ class ListViewModel {
         getCharacters(showMidIndicator: false)
     }
 
-    func initSearchMode(query: String?) {
-        nameStartWith = query
+    func initSearchMode() {
         isSearching = true
         offset = 0
     }
 
     func search(query: String?) {
+        nameStartWith = query
         let useCase = getCharactersUseCase.execute(nameStartsWith: query, limit: limit, offset: offset)
         onLoading.onNext(true)
         useCase.subscribe(onNext: { [weak self] response in

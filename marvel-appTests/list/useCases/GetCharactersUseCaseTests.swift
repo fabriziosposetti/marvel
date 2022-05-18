@@ -19,7 +19,7 @@ class GetCharactersUseCaseTests: XCTestCase {
         let useCase = GetCharactersUseCase(repository: mockRepository)
 
         // when
-        let result = useCase.execute(limit: 20, offset: 20)
+        let result = useCase.execute(nameStartsWith: nil, limit: 20, offset: 20)
         let expectation = self.expectation(description: "OK")
         result.subscribe(onNext: { response in
             // then
@@ -34,10 +34,10 @@ class GetCharactersUseCaseTests: XCTestCase {
 
 class CharactersRepositoryMock: CharactersRepositoryProtocol {
 
-    func getCharacters(limit: Int, offset: Int) -> Observable<CharacterResponse> {
+    func getCharacters(nameStartsWith: String?, limit: Int, offset: Int) -> Observable<CharacterResponse> {
         return CharactersTestHelper.getCharacterResponse()
     }
-
+    
 }
 
 class CharactersTestHelper {

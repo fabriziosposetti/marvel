@@ -67,7 +67,7 @@ class ListViewController: UIViewController {
 
     private func search(_ query: String?) {
         isSearching = true
-        viewModel.initSearchMode(query: query)
+        viewModel.initSearchMode()
         viewModel.search(query: query)
     }
 
