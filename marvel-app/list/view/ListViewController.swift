@@ -15,7 +15,8 @@ class ListViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tryAgainBtn: UIButton!
-    
+    @IBOutlet weak var footerActiviyIndicator: UIActivityIndicatorView!
+
     // MARK: Private
     private var viewModel: ListViewModel!
     private let disposeBag: DisposeBag! = DisposeBag()
@@ -24,7 +25,7 @@ class ListViewController: UIViewController {
         super.viewDidLoad()
         initViewModel()
         setupView()
-        loadCharcters()
+        loadCharcters(showMidIndicator: true)
     }
 
     private func initViewModel() {
@@ -34,10 +35,11 @@ class ListViewController: UIViewController {
 
     private func setupView() {
         title = "NAV_BAR_LIST_TITLE".localized()
+        footerActiviyIndicator.isHidden = true
     }
 
-    private func loadCharcters() {
-        viewModel.getCharacters()
+    private func loadCharcters(showMidIndicator: Bool) {
+        viewModel.getCharacters(showMidIndicator: showMidIndicator)
     }
 
     private func bindViewModel() {
@@ -50,12 +52,16 @@ class ListViewController: UIViewController {
     private func bindLoading() {
         viewModel.output.loading.bind(onNext: { [weak self] show in
             guard let self = self else { return }
-            self.handleProgress(show: show)
+            self.handleMidIndicator(show: show)
+        }).disposed(by: disposeBag)
+
+        viewModel.output.loadingMoreCharacters.bind(onNext: { [weak self] show in
+            guard let self = self else { return }
+            self.handleFooterIndicator(show: show)
         }).disposed(by: disposeBag)
     }
 
     private func bindTableView() {
-
         viewModel.output.successfullyLoaded.bind(onNext: { [weak self] in
             guard let self = self else { return }
             self.showResults()
@@ -77,7 +83,9 @@ class ListViewController: UIViewController {
             let isLastCell = self.viewModel.isLastCell(row: indexPath.row)
             let hasNextPage = self.viewModel.hasNextPage()
             if isLastCell && hasNextPage {
-                self.loadCharcters()
+//                self.footerActiviyIndicator.isHidden = false
+//                self.footerActiviyIndicator.startAnimating()
+                self.loadCharcters(showMidIndicator: false)
             }
         }).disposed(by: disposeBag)
     }
@@ -88,7 +96,7 @@ class ListViewController: UIViewController {
     }
 
     private func showErrorState() {
-        handleProgress(show: false)
+        handleMidIndicator(show: false)
         tryAgainBtn.isHidden = false
         showToast(message: "SERVICE_GENERIC_ERROR".localized(), successMsg: false)
     }
@@ -104,19 +112,31 @@ class ListViewController: UIViewController {
         tableView.register(UINib(nibName: CharacterTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: CharacterTableViewCell.identifier)
     }
 
-    private func handleProgress(show: Bool) {
+    private func handleMidIndicator(show: Bool) {
         if show {
             activityIndicator.isHidden = false
             activityIndicator.startAnimating()
         } else {
+            footerActiviyIndicator.stopAnimating()
+            footerActiviyIndicator.isHidden = true
             activityIndicator.isHidden = true
             activityIndicator.stopAnimating()
         }
     }
 
+    private func handleFooterIndicator(show: Bool) {
+        if show {
+            footerActiviyIndicator.isHidden = false
+            footerActiviyIndicator.startAnimating()
+        } else {
+            footerActiviyIndicator.stopAnimating()
+            footerActiviyIndicator.isHidden = true
+        }
+    }
+
     @IBAction func tryAgainTapped(_ sender: Any) {
         tryAgainBtn.isHidden = true
-        loadCharcters()
+        loadCharcters(showMidIndicator: true)
     }
 
 }
