@@ -16,7 +16,6 @@ class ListViewModel {
         let characters: Observable<[CharacterModel]>
         let loading: Observable<Bool>
         let loadingMoreCharacters: Observable<Bool>
-        let error: Observable<Void>
         let successfullyLoaded: Observable<Void>
     }
 
@@ -25,7 +24,6 @@ class ListViewModel {
     private var onCharactersLoad = PublishSubject<[CharacterModel]>()
     private var onLoading = PublishSubject<Bool>()
     private var onLoadingMoreCharacters = PublishSubject<Bool>()
-    private var onError =  PublishSubject<Void>()
     private var onSuccessfullLoading =  PublishSubject<Void>()
     private var characters: [CharacterModel] = []
     private var limit: Int = 20
@@ -40,7 +38,6 @@ class ListViewModel {
         self.output = Output(characters: onCharactersLoad.asObservable(),
                              loading: onLoading.asObservable(),
                              loadingMoreCharacters: onLoadingMoreCharacters.asObservable(),
-                             error: onError.asObservable(),
                              successfullyLoaded: onSuccessfullLoading.asObservable())
     }
 
@@ -52,9 +49,9 @@ class ListViewModel {
             guard let self = self else { return }
             showMidIndicator ? self.onLoading.onNext(false) : self.onLoadingMoreCharacters.onNext(false)
             self.handleCharactersResponse(response: response)
-        }, onError: { [weak self] _ in
+        }, onError: { [weak self] error in
             guard let self = self else { return }
-            self.onError.onNext(())
+            self.onCharactersLoad.onError(error)
         }).disposed(by: disposeBag)
     }
 

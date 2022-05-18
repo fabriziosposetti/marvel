@@ -6,30 +6,62 @@
 //
 
 import XCTest
+import RxSwift
+@testable import marvel_app
 
 class ListViewModelTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    private var disposeBag = DisposeBag()
+
+    func test_loadCharacters_ok() {
+        // given
+        let getCharactersUseCaseMock = GetCharactersUseCaseMock(success: true)
+        let viewModel = ListViewModel(getCharactersUseCase: getCharactersUseCaseMock)
+
+        let expectation = self.expectation(description: "OK")
+
+        viewModel.output.characters.subscribe(onNext: { response in
+            // then
+            XCTAssertFalse(viewModel.hasNextPage())
+            XCTAssertTrue(response.first?.name == "name")
+            expectation.fulfill()
+        }).disposed(by: disposeBag)
+
+        // when
+        viewModel.getCharacters(showMidIndicator: true)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    func test_loadCharacters_fail() {
+        // given
+        let getCharactersUseCaseMock = GetCharactersUseCaseMock(success: false)
+        let viewModel = ListViewModel(getCharactersUseCase: getCharactersUseCaseMock)
+
+        let expectation = self.expectation(description: "OK")
+
+        viewModel.output.characters.subscribe(onError: { response in
+            // then
+            expectation.fulfill()
+        }).disposed(by: disposeBag)
+
+        // when
+        viewModel.getCharacters(showMidIndicator: true)
+        waitForExpectations(timeout: 10, handler: nil)
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+}
+
+class GetCharactersUseCaseMock: GetCharactersUseCaseProtocol {
+
+    private var success: Bool
+
+    init(success: Bool) {
+        self.success = success
+    }
+    
+    func execute(limit: Int, offset: Int) -> Observable<CharacterResponse> {
+        return success ? CharactersTestHelper.getCharacterResponse() : Observable.error(ErrorResult(type: .failure))
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
 
 }
