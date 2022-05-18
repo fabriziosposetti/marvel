@@ -10,12 +10,12 @@ import Foundation
 // MARK: - CharacterResponse
 struct CharacterResponse: Codable {
     let code: Int?
-    let data: CharacterData?
+    let data: CharacterData
 }
 
 // MARK: - HerosResponse
 struct CharacterData: Codable {
-    let offset, limit, total, count: Int?
+    let offset, limit, total, count: Int
     let results: [CharacterEntity]?
 }
 

@@ -118,7 +118,7 @@ class ListViewController: UIViewController {
     }
 
     private func bindError() {
-        viewModel.output.characters.subscribe(onError: { [weak self] _ in
+        viewModel.output.error.subscribe(onNext: { [weak self] _ in
             guard let self = self else { return }
             self.showErrorState()
         }).disposed(by: disposeBag)

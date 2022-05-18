@@ -39,7 +39,7 @@ class ListViewModelTests: XCTestCase {
 
         let expectation = self.expectation(description: "OK")
 
-        viewModel.output.characters.subscribe(onError: { response in
+        viewModel.output.error.subscribe(onNext: { response in
             // then
             expectation.fulfill()
         }).disposed(by: disposeBag)

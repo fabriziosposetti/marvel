@@ -15,6 +15,7 @@ class ListViewModel {
     struct Output {
         let characters: Observable<[CharacterModel]>
         let loading: Observable<Bool>
+        let error: Observable<Void>
         let loadingMoreCharacters: Observable<Bool>
         let successfullyLoaded: Observable<Void>
     }
@@ -25,6 +26,7 @@ class ListViewModel {
     private var onLoading = PublishSubject<Bool>()
     private var onLoadingMoreCharacters = PublishSubject<Bool>()
     private var onSuccessfullLoading =  PublishSubject<Void>()
+    private var onError =  PublishSubject<Void>()
     private var characters: [CharacterModel] = []
     private var limit: Int = 20
     private var offset: Int = 0
@@ -37,6 +39,7 @@ class ListViewModel {
         self.getCharactersUseCase = getCharactersUseCase
         self.output = Output(characters: onCharactersLoad.asObservable(),
                              loading: onLoading.asObservable(),
+                             error: onError.asObservable(),
                              loadingMoreCharacters: onLoadingMoreCharacters.asObservable(),
                              successfullyLoaded: onSuccessfullLoading.asObservable())
     }
@@ -51,15 +54,15 @@ class ListViewModel {
             self.handleCharactersResponse(response: response)
         }, onError: { [weak self] error in
             guard let self = self else { return }
-            self.onCharactersLoad.onError(error)
+            self.onError.onNext(())
         }).disposed(by: disposeBag)
     }
 
     private func handleCharactersResponse(response: CharacterResponse) {
         let newCharacters = CharacterMapper.map(characterResponse: response)
         characters.append(contentsOf: newCharacters)
-        totalCharacters = response.data?.total ?? 0
-        offset += response.data?.count ?? 0
+        totalCharacters = response.data.total
+        offset += response.data.count
         onCharactersLoad.onNext(self.characters)
         onSuccessfullLoading.onNext(())
     }
@@ -73,3 +76,4 @@ class ListViewModel {
     }
 
 }
+

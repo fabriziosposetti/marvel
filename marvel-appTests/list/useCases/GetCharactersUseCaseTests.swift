@@ -23,7 +23,7 @@ class GetCharactersUseCaseTests: XCTestCase {
         let expectation = self.expectation(description: "OK")
         result.subscribe(onNext: { response in
             // then
-            XCTAssertTrue(response.data?.results?.first?.name == "name")
+            XCTAssertTrue(response.data.results?.first?.name == "name")
             expectation.fulfill()
         }).disposed(by: disposeBag)
 
