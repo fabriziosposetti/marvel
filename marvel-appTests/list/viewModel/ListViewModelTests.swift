@@ -1,14 +1,13 @@
 //
-//  marvel_appTests.swift
+//  ListViewModelTests.swift
 //  marvel-appTests
 //
-//  Created by Fabrizio Sposetti on 16/05/2022.
+//  Created by Fabrizio Sposetti on 18/05/2022.
 //
 
 import XCTest
-@testable import marvel_app
 
-class marvel_appTests: XCTestCase {
+class ListViewModelTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
