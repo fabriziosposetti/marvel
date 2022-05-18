@@ -66,8 +66,8 @@ class ListViewController: UIViewController {
     }
 
     private func search(_ query: String?) {
-        viewModel.initSearchMode(query: query)
         isSearching = true
+        viewModel.initSearchMode(query: query)
         viewModel.search(query: query)
     }
 
@@ -110,7 +110,6 @@ class ListViewController: UIViewController {
     private func bindTableView() {
         viewModel.output.successfullyLoaded.bind(onNext: { [weak self] in
             guard let self = self else { return }
-            self.loadingMoreData = false
             self.showResults()
         }).disposed(by: disposeBag)
 
@@ -131,7 +130,7 @@ class ListViewController: UIViewController {
             let hasNextPage = self.viewModel.hasNextPage()
             if isLastCell && hasNextPage && !self.loadingMoreData {
                 self.loadingMoreData = true
-                self.isSearching ? self.viewModel.continueSearching() : self.loadCharcters(showMidIndicator: false)
+                self.isSearching ? self.viewModel.getMoreSearchResults() : self.viewModel.getMoreCharacters()
             }
         }).disposed(by: disposeBag)
 
@@ -145,11 +144,13 @@ class ListViewController: UIViewController {
     }
 
     private func showResults() {
+        loadingMoreData = false
         tryAgainBtn.isHidden = true
         tableView.isHidden = false
     }
 
     private func showErrorState() {
+        loadingMoreData = false
         handleMidIndicator(show: false)
         tryAgainBtn.isHidden = false
         showToast(message: "SERVICE_GENERIC_ERROR".localized(), successMsg: false)

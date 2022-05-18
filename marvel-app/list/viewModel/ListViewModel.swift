@@ -34,6 +34,7 @@ class ListViewModel {
     private var totalCharacters: Int = 0
     private var totalCharactersSearched: Int = 0
     private var isSearching = false
+    private var loadingMoreSearchResults = false
     private var nameStartWith: String?
 
     // MARK: - Private: UseCases
@@ -51,7 +52,6 @@ class ListViewModel {
     func getCharacters(showMidIndicator: Bool) {
         let useCase = getCharactersUseCase.execute(nameStartsWith: nil, limit: limit, offset: offset)
         showMidIndicator ? onLoading.onNext(true) : onLoadingMoreCharacters.onNext(true)
-
         useCase.subscribe(onNext: { [weak self] response in
             guard let self = self else { return }
             showMidIndicator ? self.onLoading.onNext(false) : self.onLoadingMoreCharacters.onNext(false)
@@ -60,6 +60,10 @@ class ListViewModel {
             guard let self = self else { return }
             self.onError.onNext(())
         }).disposed(by: disposeBag)
+    }
+
+    func getMoreCharacters() {
+        getCharacters(showMidIndicator: false)
     }
 
     func initSearchMode(query: String?) {
@@ -81,7 +85,8 @@ class ListViewModel {
         }).disposed(by: disposeBag)
     }
 
-    func continueSearching() {
+    func getMoreSearchResults() {
+        loadingMoreSearchResults = true
         search(query: nameStartWith)
     }
 
@@ -95,7 +100,12 @@ class ListViewModel {
     private func handleCharactersResponse(response: CharacterResponse, searchResponse: Bool) {
         let newCharacters = CharacterMapper.map(characterResponse: response)
         if searchResponse {
-            charactersSearched.append(contentsOf: newCharacters)
+            if loadingMoreSearchResults {
+                charactersSearched.append(contentsOf: newCharacters)
+                loadingMoreSearchResults = false
+            } else {
+                charactersSearched = newCharacters
+            }
             offset += response.data.count
             totalCharactersSearched = response.data.total
             onCharactersLoad.onNext(charactersSearched)
